@@ -14,8 +14,13 @@ function repeatCallback(callback, ms) {
 function printValueIntoHtml(value) {
     let textBlock = document.getElementById('text-block');
     let newChildBlock = document.createElement('p');
-    newChildBlock.innerText = `test${value}`;
-    textBlock.insertAdjacentElement('beforeend', newChildBlock);
+    let newChildBlockText = `test${value}`;
+    newChildBlock.innerText = newChildBlockText;
+    let item = localStorage.getItem(newChildBlockText)
+    if (!item) {
+        localStorage.setItem(newChildBlockText, 'sometext');
+        textBlock.insertAdjacentElement('afterbegin', newChildBlock);
+    }
 }
 
 function changeStateToStopped() {
@@ -39,11 +44,11 @@ let intervalId;
  */
 window.localStorage.clear();
 
-startJobAt(15, 32,
+startJobAt(16, 5,
     () => {
         repeatCallback(() => {
             printValueIntoHtml(counter)
             counter++;
-        }, 1000)
+        }, 250)
     }
 );

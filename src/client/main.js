@@ -20,31 +20,41 @@ function printValueIntoHtml(value) {
     if (!item) {
         localStorage.setItem(newChildBlockText, 'sometext');
         textBlock.insertAdjacentElement('afterbegin', newChildBlock);
+        results.push(newChildBlockText);
     }
 }
 
-function changeStateToStopped() {
+async function changeStateToStopped() {
     if (intervalId) {
         clearInterval(intervalId)
     }
     let indicator = document.getElementById('indicator');
     indicator.innerText = 'STOPPED'
     indicator.classList.add('important-text')
+    let response = await fetch('http://localhost:3000/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(results)
+    });
+    console.log(response);
 }
 
-function sendResults() {
-    changeStateToStopped()
+async function sendResults() {
+    await changeStateToStopped()
 }
 
 let counter = 1;
 let intervalId;
+let results = [];
 /**
  * Очищаем локальное хранилище во избежание отсутствия
  * предыдущих данных
  */
 window.localStorage.clear();
 
-startJobAt(16, 5,
+startJobAt(17, 17,
     () => {
         repeatCallback(() => {
             printValueIntoHtml(counter)

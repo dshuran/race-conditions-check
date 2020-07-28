@@ -1,0 +1,13 @@
+
+#text-block {
+    margin: 10px;
+    padding: 10px;
+    height: 50vh;
+    width: 20vw;
+    overflow: auto;
+    border: 1px solid cornflowerblue;
+}
+
+.important-text {
+    color: orangered;
+}
